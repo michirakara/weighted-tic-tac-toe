@@ -9,6 +9,7 @@ function App() {
     const [playerScore, setPlayerScore] = useState(0);
     const [enemyScore,setEnemyScore] = useState(0);
     const [condition,setCondition]= useState('ganbare~');
+    const [isFinished,setIsFinished]=useState(false);
 
     useEffect(() => {
         init();
@@ -30,6 +31,7 @@ function App() {
         var condition=check_condition(board1,board2,numBoard);
         console.log(condition);
         if(condition!=0){
+            setIsFinished(true);
             if(condition>0){
                 setCondition("you win");
             }
@@ -53,6 +55,11 @@ function App() {
         }
         return "open";
     }
+    function isDisabled(index:number){
+        if(isOpen(index)=='close' || isFinished){
+            return true;
+        }
+    }
     function getText(index:number):string{
         var ret=''
         if(board1 & (1<<index)){
@@ -73,15 +80,15 @@ function App() {
     return <>
         <div className="main">
             <div className="board">
-                <button style={{background: getBackGroundColor(0)}}className={isOpen(0)}id="n0" disabled={isOpen(0)=='close'} onClick={() => putStone(0)}>{getText(0)}<br/>{numBoard[0]}</button>
-                <button style={{background: getBackGroundColor(1)}}className={isOpen(1)}id="n1" disabled={isOpen(1)=='close'} onClick={() => putStone(1)}>{getText(1)}<br/>{numBoard[1]}</button>
-                <button style={{background: getBackGroundColor(2)}}className={isOpen(2)}id="n2" disabled={isOpen(2)=='close'} onClick={() => putStone(2)}>{getText(2)}<br/>{numBoard[2]}</button>
-                <button style={{background: getBackGroundColor(3)}}className={isOpen(3)}id="n3" disabled={isOpen(3)=='close'} onClick={() => putStone(3)}>{getText(3)}<br/>{numBoard[3]}</button>
-                <button style={{background: getBackGroundColor(4)}}className={isOpen(4)}id="n4" disabled={isOpen(4)=='close'} onClick={() => putStone(4)}>{getText(4)}<br/>{numBoard[4]}</button>
-                <button style={{background: getBackGroundColor(5)}}className={isOpen(5)}id="n5" disabled={isOpen(5)=='close'} onClick={() => putStone(5)}>{getText(5)}<br/>{numBoard[5]}</button>
-                <button style={{background: getBackGroundColor(6)}}className={isOpen(6)}id="n6" disabled={isOpen(6)=='close'} onClick={() => putStone(6)}>{getText(6)}<br/>{numBoard[6]}</button>
-                <button style={{background: getBackGroundColor(7)}}className={isOpen(7)}id="n7" disabled={isOpen(7)=='close'} onClick={() => putStone(7)}>{getText(7)}<br/>{numBoard[7]}</button>
-                <button style={{background: getBackGroundColor(8)}}className={isOpen(8)}id="n8" disabled={isOpen(8)=='close'} onClick={() => putStone(8)}>{getText(8)}<br/>{numBoard[8]}</button>
+                <button style={{background: getBackGroundColor(0)}}className={isOpen(0)}id="n0" disabled={isDisabled(0)} onClick={() => putStone(0)}>{getText(0)}<br/>{numBoard[0]}</button>
+                <button style={{background: getBackGroundColor(1)}}className={isOpen(1)}id="n1" disabled={isDisabled(1)} onClick={() => putStone(1)}>{getText(1)}<br/>{numBoard[1]}</button>
+                <button style={{background: getBackGroundColor(2)}}className={isOpen(2)}id="n2" disabled={isDisabled(2)} onClick={() => putStone(2)}>{getText(2)}<br/>{numBoard[2]}</button>
+                <button style={{background: getBackGroundColor(3)}}className={isOpen(3)}id="n3" disabled={isDisabled(3)} onClick={() => putStone(3)}>{getText(3)}<br/>{numBoard[3]}</button>
+                <button style={{background: getBackGroundColor(4)}}className={isOpen(4)}id="n4" disabled={isDisabled(4)} onClick={() => putStone(4)}>{getText(4)}<br/>{numBoard[4]}</button>
+                <button style={{background: getBackGroundColor(5)}}className={isOpen(5)}id="n5" disabled={isDisabled(5)} onClick={() => putStone(5)}>{getText(5)}<br/>{numBoard[5]}</button>
+                <button style={{background: getBackGroundColor(6)}}className={isOpen(6)}id="n6" disabled={isDisabled(6)} onClick={() => putStone(6)}>{getText(6)}<br/>{numBoard[6]}</button>
+                <button style={{background: getBackGroundColor(7)}}className={isOpen(7)}id="n7" disabled={isDisabled(7)} onClick={() => putStone(7)}>{getText(7)}<br/>{numBoard[7]}</button>
+                <button style={{background: getBackGroundColor(8)}}className={isOpen(8)}id="n8" disabled={isDisabled(8)} onClick={() => putStone(8)}>{getText(8)}<br/>{numBoard[8]}</button>
             </div>
             <div>
                 <p className="condition">
