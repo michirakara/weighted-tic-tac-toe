@@ -5,7 +5,7 @@ import init,{ put_stone, check_condition, cpu_turn } from '../wasm/pkg/wasm';
 function App() {
     const [board1,setBoard1] = useState(0);
     const [board2,setBoard2] = useState(0);
-    const [numBoard,_] = useState(new Int32Array(9).map((_)=>Math.floor(Math.random()*201-100)));
+    const [numBoard,setNumBoard] = useState(new Int32Array(9).map((_)=>Math.floor(Math.random()*201-100)));
     const [playerScore, setPlayerScore] = useState(0);
     const [enemyScore,setEnemyScore] = useState(0);
     const [condition,setCondition]= useState('ganbare~');
@@ -13,6 +13,15 @@ function App() {
 
     useEffect(() => {
         init();
+        var tmp=0;
+        for(var i=0;i<9;i++)tmp+=numBoard[i];
+        if(tmp%2==0){
+            if(numBoard[8]!=100){
+                setNumBoard(numBoard.map((val,index)=>(index===8?val+1:val)));
+            }else{
+                setNumBoard(numBoard.map((val,index)=>(index===8?val-1:val)));
+            }
+        }
     }, [])
 
     function checkCondition(board1:number,board2:number){
